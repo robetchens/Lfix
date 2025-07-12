@@ -92,11 +92,17 @@
           window.unityInstance = unityInstance;
           loadingBar.style.display = "none";
 
-          // Load Zappar VideoRecorder and SNS libraries AFTER unityInstance is set
+          // Load Zappar VideoRecorder library
           var zr = document.createElement('script');
           zr.src = 'https://libs.zappar.com/zappar-videorecorder/1.0.1/zappar-videorecorder.js';
+          zr.onload = function() {
+            // Alias ZapparVideoRecorder to ZVideoRecorder for C# binding
+            window.ZVideoRecorder = window.ZapparVideoRecorder;
+            console.log('🚀 ZVideoRecorder aliased:', typeof window.ZVideoRecorder);
+          };
           document.body.appendChild(zr);
 
+          // Load SNS library
           var zs = document.createElement('script');
           zs.src = 'https://libs.zappar.com/zappar-webgl-sns/1.0.1/zappar-webgl-sns.js';
           document.body.appendChild(zs);
